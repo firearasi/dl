@@ -11,6 +11,7 @@ parser=argparse.ArgumentParser(prog="My torrent downloader \
 parser.add_argument('torrent',help='torrent address')
 parser.add_argument('-o','--output_dir',default='.',
   help='set local destination dir')
+parser.add_argument('-t','--title',help='directory title')
 args=parser.parse_args()
 
 #parse torrent file name
@@ -23,7 +24,7 @@ torrent=torrent[0:index]
 
 # create tmp dir on aws
 
-tmpdir="tmpdir%s"%int(time.time())
+tmpdir="tmpdir%s"%int(time.time()) if args.title is None else args.title
 
 # download with transmission-cli 
 transmission_cmd=["transmission-cli","-D","-f",
