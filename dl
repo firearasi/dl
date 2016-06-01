@@ -19,7 +19,10 @@ torrent=args.torrent
 index=torrent.find('.torrent')+8
 torrent=torrent[0:index]
 
+
+
 # create tmp dir on aws
+
 tmpdir="tmpdir%s"%int(time.time())
 
 # download with transmission-cli 
@@ -36,13 +39,14 @@ if ret_code==255:
   print("AWS bt download succeeded...")
   print("Copying to local dir:",args.output_dir)
   
-  #get remote download dir
-  download_dir=subprocess.run(['ssh',aws,'ls',tmpdir],
-                stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
-  remote_files=aws+':'+tmpdir+'/'+download_dir
-  #remote_files=aws+':'+tmpdir
-  print('remote download dir: ',download_dir)
-  subprocess.run(['scp','-r',remote_files,args.output_dir])
+  #Get subdirectory of the tmpdir
+  
+  remote_files_tmp=aws+':'+tmpdir
+  
+  remote_files=aws+':'+tmpdir+'/\*'
+  
+  
+  subprocess.run(['scp','-r',remote_files_tmp,args.output_dir])
 else:
   print("Download failed!")
 subprocess.run(['ssh',aws,'rm',tmpdir,'-rf'])
