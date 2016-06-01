@@ -37,9 +37,11 @@ if ret_code==255:
   print("Copying to local dir:",args.output_dir)
   
   #get remote download dir
-  download_dir=subprocess.run(['ssh',aws,'ls'],
+  download_dir=subprocess.run(['ssh',aws,'ls',tmpdir],
                 stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
   remote_files=aws+':'+tmpdir+'/'+download_dir
+  #remote_files=aws+':'+tmpdir
+  print('remote download dir: ',download_dir)
   subprocess.run(['scp','-r',remote_files,args.output_dir])
 else:
   print("Download failed!")
