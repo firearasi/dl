@@ -18,12 +18,8 @@ parser.add_argument('-k','--keep_in_aws',
     action='store_true',help='keep file in aws server')
 args=parser.parse_args()
 
-#parse torrent file name
-torrent=args.torrent
-index=torrent.find('.torrent')+8
-torrent=torrent[0:index]
 
-download(aws,torrent,args.title,args.output_dir,args.keep_in_aws)
+download(aws,args.torrent,args.title,args.output_dir,args.keep_in_aws)
   
 
 
