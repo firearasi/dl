@@ -1,0 +1,4 @@
+#!/bin/bash
+chmod 400 icearasi.pem
+python dl.py $@
+
